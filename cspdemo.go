@@ -1,74 +1,74 @@
 package main
 
 import (
-  "net/http"
-  "fmt"
-  "html/template"
-  "bytes"
+	"bytes"
+	"fmt"
+	"html/template"
+	"net/http"
 )
 
 func handleRequest(response http.ResponseWriter, request *http.Request) {
-  response.Header().Set("x-clacks-overhead", "GNU Terry Pratchett")
+	response.Header().Set("x-clacks-overhead", "GNU Terry Pratchett")
 
-  sendCspParam := request.FormValue("send-csp")
-  sendCsp := sendCspParam == "on"
-  defaultSrcParam := request.FormValue("default-src")
+	sendCspParam := request.FormValue("send-csp")
+	sendCsp := sendCspParam == "on"
+	defaultSrcParam := request.FormValue("default-src")
 
-  cspHeader := ""
+	cspHeader := ""
 
-  if sendCsp && defaultSrcParam != "" {
-    cspHeader = fmt.Sprintf("report-uri /report; default-src %s;", defaultSrcParam)
-    response.Header().Set("content-security-policy", cspHeader)
-  }
+	if sendCsp && defaultSrcParam != "" {
+		cspHeader = fmt.Sprintf("report-uri /report; default-src %s;", defaultSrcParam)
+		response.Header().Set("content-security-policy", cspHeader)
+	}
 
-  data := renderInfo{sendCsp, defaultSrcParam, cspHeader}
+	data := renderInfo{sendCsp, defaultSrcParam, cspHeader}
 
-  renderPage(response, data)
+	renderPage(response, data)
 }
 
 type renderInfo struct {
-  SendCsp bool
-  DefaultSrc string
-  CspHeader string
+	SendCsp    bool
+	DefaultSrc string
+	CspHeader  string
 }
 
 func renderPage(response http.ResponseWriter, data renderInfo) {
-  tmpl, err := template.New("Demo").Parse(pageTemplate)
-  if err != nil {
-    response.WriteHeader(500)
-    fmt.Fprintf(response, "Internal Server Error")
-  } else {
-    tmpl.Execute(response, data)
-  }
+	tmpl, err := template.New("Demo").Parse(pageTemplate)
+	if err != nil {
+		response.WriteHeader(500)
+		fmt.Fprintf(response, "Internal Server Error")
+	} else {
+		tmpl.Execute(response, data)
+	}
 }
 
 func cspReport(response http.ResponseWriter, request *http.Request) {
-  if request.Method != "POST" {
-    response.Header().Set("Allow", "POST")
-    response.WriteHeader(405)
-    response.Write([]byte{})
-    return
-  }
-  bodyBuf := new(bytes.Buffer)
-  _, err := bodyBuf.ReadFrom(request.Body)
-  if err == nil {
-    fmt.Println(bodyBuf.String())
-    response.WriteHeader(200)
-    response.Write([]byte{})
-  } else {
-    fmt.Println("Unable to read report body.")
-    response.WriteHeader(500)
-    fmt.Fprintf(response, "Internal Server Error")
-  }
+	if request.Method != "POST" {
+		response.Header().Set("Allow", "POST")
+		response.WriteHeader(405)
+		response.Write([]byte{})
+		return
+	}
+	bodyBuf := new(bytes.Buffer)
+	_, err := bodyBuf.ReadFrom(request.Body)
+	if err == nil {
+		fmt.Println(bodyBuf.String())
+		response.WriteHeader(200)
+		response.Write([]byte{})
+	} else {
+		fmt.Println("Unable to read report body.")
+		response.WriteHeader(500)
+		fmt.Fprintf(response, "Internal Server Error")
+	}
 }
 
 func main() {
-  fs := http.FileServer(http.Dir("assets"))
-  http.Handle("/assets/", http.StripPrefix("/assets", fs))
-  http.HandleFunc("/report", cspReport)
-  http.HandleFunc("/", handleRequest)
+	fs := http.FileServer(http.Dir("assets"))
+	http.Handle("/assets/", http.StripPrefix("/assets", fs))
+	http.HandleFunc("/report", cspReport)
+	http.HandleFunc("/", handleRequest)
 
-  http.ListenAndServe(":3000", nil)
+	http.ListenAndServe(":3000", nil)
 }
 
 // TODO: Examples:

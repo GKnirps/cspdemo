@@ -4,6 +4,7 @@ import (
   "net/http"
   "fmt"
   "html/template"
+  "bytes"
 )
 
 func handleRequest(response http.ResponseWriter, request *http.Request) {
@@ -16,7 +17,7 @@ func handleRequest(response http.ResponseWriter, request *http.Request) {
   cspHeader := ""
 
   if sendCsp && defaultSrcParam != "" {
-    cspHeader = fmt.Sprintf("default-src %s;", defaultSrcParam)
+    cspHeader = fmt.Sprintf("report-uri /report; default-src %s;", defaultSrcParam)
     response.Header().Set("content-security-policy", cspHeader)
   }
 
@@ -41,9 +42,30 @@ func renderPage(response http.ResponseWriter, data renderInfo) {
   }
 }
 
+func cspReport(response http.ResponseWriter, request *http.Request) {
+  if request.Method != "POST" {
+    response.Header().Set("Allow", "POST")
+    response.WriteHeader(405)
+    response.Write([]byte{})
+    return
+  }
+  bodyBuf := new(bytes.Buffer)
+  _, err := bodyBuf.ReadFrom(request.Body)
+  if err == nil {
+    fmt.Println(bodyBuf.String())
+    response.WriteHeader(200)
+    response.Write([]byte{})
+  } else {
+    fmt.Println("Unable to read report body.")
+    response.WriteHeader(500)
+    fmt.Fprintf(response, "Internal Server Error")
+  }
+}
+
 func main() {
   fs := http.FileServer(http.Dir("assets"))
   http.Handle("/assets/", http.StripPrefix("/assets", fs))
+  http.HandleFunc("/report", cspReport)
   http.HandleFunc("/", handleRequest)
 
   http.ListenAndServe(":3000", nil)

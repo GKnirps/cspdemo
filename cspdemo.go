@@ -72,7 +72,7 @@ func main() {
 }
 
 // TODO: Examples:
-// javascript, images
+// images
 // checksum
 // TODO: Readme-file
 // link to https://content-security-policy.com/
@@ -117,30 +117,56 @@ const pageTemplate = `
       <div class="demo-attributes">
         <h3>This section uses attribute style and inline code on onclick handlers</h3>
         <div class="css-testarea" style="color: red;">This text should be red</div>
+        <div>
+          <span id="demo-attributes-script">This text has <em>not</em> been altered by javascript</span>
+          <script type="text/javascript">
+            document.getElementById('demo-attributes-script').innerHTML = 'This text <em>has</em> been altered by javascript.'
+          </script>
+        </div>
       </div>
       <div class="demo-local">
-        <h3>This section uses css and script that is rendered in the header</h3>
+        <h3>This section uses css that is rendered in the header</h3>
         <div class="css-testarea">This text should be red</div>
       </div>
       <div class="demo-path-only">
         <h3>This section uses css and script that is loaded by a path relative to the document domain</h3>
         <div class="css-testarea">This text should be red</div>
+        <div>
+          <span id="demo-path-only-script">This text has <em>not</em> been altered by javascript</span>
+          <script type="text/javascript" src="/assets/pathonly.js"></script>
+        </div>
       </div>
       <div class="demo-same-domain">
         <h3>This section uses css and script that is loaded from the domain "localhost"</h3>
         <div class="css-testarea">This text should be red</div>
+        <div>
+          <span id="demo-same-domain-script">This text has <em>not</em> been altered by javascript</span>
+          <script type="text/javascript" src="/assets/samedomain.js"></script>
+        </div>
       </div>
       <div class="demo-subdomain">
         <h3>This section uses css and script that is loaded from a the domain "sub.localhost"</h3>
         <div class="css-testarea">This text should be red</div>
+        <div>
+          <span id="demo-subdomain-script">This text has <em>not</em> been altered by javascript</span>
+          <script type="text/javascript" src="/assets/subdomain.js"></script>
+        </div>
       </div>
       <div class="demo-foreign-domain">
         <h3>This section uses css and script that is loaded from a the domain "unlocalhost"</h3>
         <div class="css-testarea">This text should be red</div>
+        <div>
+          <span id="demo-foreign-domain-script">This text has <em>not</em> been altered by javascript</span>
+          <script type="text/javascript" src="/assets/foreigndomain.js"></script>
+        </div>
       </div>
       <div class="demo-foreign-subdomain">
         <h3>This section uses css and script that is loaded from a the domain "sub.unlocalhost"</h3>
         <div class="css-testarea">This text should be red</div>
+        <div>
+          <span id="demo-foreign-subdomain-script">This text has <em>not</em> been altered by javascript</span>
+          <script type="text/javascript" src="/assets/foreignsubdomain.js"></script>
+        </div>
       </div>
     </div>
   </body>

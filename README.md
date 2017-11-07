@@ -7,6 +7,10 @@ Cspdemo also supports reports of policy breaks which are sent to the server and 
 
 The demo site is inherently ugly, because we can't reliably use styling because of changing content security policies.
 
+License
+-------
+Cspdemo is published under GNU [General Public License](https://www.gnu.org/licenses/licenses.en.html#GPL).
+
 Setup
 -----
 

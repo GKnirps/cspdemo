@@ -154,7 +154,7 @@ const pageTemplate = `
         <div class="css-testarea">This text should be red</div>
         <div>
           <span id="demo-same-domain-script">This text has <em>not</em> been altered by javascript</span>
-          <script type="text/javascript" src="/assets/samedomain.js"></script>
+          <script type="text/javascript" src="http://localhost:3000/assets/samedomain.js"></script>
         </div>
       </div>
       <div class="demo-subdomain">
@@ -162,7 +162,7 @@ const pageTemplate = `
         <div class="css-testarea">This text should be red</div>
         <div>
           <span id="demo-subdomain-script">This text has <em>not</em> been altered by javascript</span>
-          <script type="text/javascript" src="/assets/subdomain.js"></script>
+          <script type="text/javascript" src="http://sub.localhost:3000/assets/subdomain.js"></script>
         </div>
       </div>
       <div class="demo-foreign-domain">
@@ -170,7 +170,7 @@ const pageTemplate = `
         <div class="css-testarea">This text should be red</div>
         <div>
           <span id="demo-foreign-domain-script">This text has <em>not</em> been altered by javascript</span>
-          <script type="text/javascript" src="/assets/foreigndomain.js"></script>
+          <script type="text/javascript" src="http://unlocalhost:3000/assets/foreigndomain.js"></script>
         </div>
       </div>
       <div class="demo-foreign-subdomain">
@@ -178,7 +178,7 @@ const pageTemplate = `
         <div class="css-testarea">This text should be red</div>
         <div>
           <span id="demo-foreign-subdomain-script">This text has <em>not</em> been altered by javascript</span>
-          <script type="text/javascript" src="/assets/foreignsubdomain.js"></script>
+          <script type="text/javascript" src="http://sub.unlocalhost:3000/assets/foreignsubdomain.js"></script>
         </div>
       </div>
     </div>

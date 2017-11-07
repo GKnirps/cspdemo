@@ -74,9 +74,6 @@ func main() {
 // TODO: Examples:
 // images
 // checksum
-// TODO: Readme-file
-// link to https://content-security-policy.com/
-// settings required in /etc/hosts
 
 const pageTemplate = `
 <html>

@@ -192,6 +192,10 @@ const pageTemplate = `
           <span id="demo-path-only-script">This text has <em>not</em> been altered by javascript</span>
           <script type="text/javascript" src="/assets/pathonly.js"></script>
         </div>
+        <div>
+          An image of a check mark with a red frame should be displayed here:
+          <img src="/assets/img.png" alt="check mark"/>
+        </div>
       </div>
       <div class="demo-same-domain">
         <h3>This section uses css and script that is loaded from the domain "localhost"</h3>
@@ -199,6 +203,10 @@ const pageTemplate = `
         <div>
           <span id="demo-same-domain-script">This text has <em>not</em> been altered by javascript</span>
           <script type="text/javascript" src="http://localhost:3000/assets/samedomain.js"></script>
+        </div>
+        <div>
+          An image of a check mark with a red frame should be displayed here:
+          <img src="http://localhost:3000/assets/img.png" alt="check mark"/>
         </div>
       </div>
       <div class="demo-subdomain">
@@ -208,6 +216,10 @@ const pageTemplate = `
           <span id="demo-subdomain-script">This text has <em>not</em> been altered by javascript</span>
           <script type="text/javascript" src="http://sub.localhost:3000/assets/subdomain.js"></script>
         </div>
+        <div>
+          An image of a check mark with a red frame should be displayed here:
+          <img src="http://sub.localhost:3000/assets/img.png" alt="check mark"/>
+        </div>
       </div>
       <div class="demo-foreign-domain">
         <h3>This section uses css and script that is loaded from a the domain "unlocalhost"</h3>
@@ -216,6 +228,10 @@ const pageTemplate = `
           <span id="demo-foreign-domain-script">This text has <em>not</em> been altered by javascript</span>
           <script type="text/javascript" src="http://unlocalhost:3000/assets/foreigndomain.js"></script>
         </div>
+        <div>
+          An image of a check mark with a red frame should be displayed here:
+          <img src="http://unlocalhost:3000/assets/img.png" alt="check mark"/>
+        </div>
       </div>
       <div class="demo-foreign-subdomain">
         <h3>This section uses css and script that is loaded from a the domain "sub.unlocalhost"</h3>
@@ -223,6 +239,10 @@ const pageTemplate = `
         <div>
           <span id="demo-foreign-subdomain-script">This text has <em>not</em> been altered by javascript</span>
           <script type="text/javascript" src="http://sub.unlocalhost:3000/assets/foreignsubdomain.js"></script>
+        </div>
+        <div>
+          An image of a check mark with a red frame should be displayed here:
+          <img src="http://sub.unlocalhost:3000/assets/img.png" alt="check mark"/>
         </div>
       </div>
     </div>

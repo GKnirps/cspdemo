@@ -23,8 +23,8 @@ Currently supported
 --------------------
 
 Cspdemo is a work in progress. Right now, the following features are supported:
-- Loading (and displaying) of CSS and Javascript from different domains (including inline style/css)
-- Setting the default-src attribute of the Content Security Policy header
+- Loading (and displaying) of CSS, Javascript and images from different domains (including inline style/css)
+- Setting the default-src, script-src, img-src and style-src attributes of the Content Security Policy header
 - not sending a Content Security Policy Header at all
 - displaying of the current Content Security Policy header in the HTML side (for reference)
 - logging of reports of violations of the Content Security Policy in the stdout of the shell where the server is started
@@ -32,5 +32,5 @@ Cspdemo is a work in progress. Right now, the following features are supported:
 Planned features
 ----------------
 
-- more different attributes of the Content Security Policy to be set in the page form
-- more different resources (e.g. images)
+- some more different attributes of the Content Security Policy to be set in the page form
+- more different resources

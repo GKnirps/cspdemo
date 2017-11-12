@@ -114,7 +114,6 @@ func main() {
 }
 
 // TODO: Examples:
-// images
 // checksum
 
 const pageTemplate = `

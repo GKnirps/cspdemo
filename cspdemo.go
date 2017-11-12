@@ -21,6 +21,7 @@ import (
 	"fmt"
 	"html/template"
 	"net/http"
+	"strings"
 )
 
 func handleRequest(response http.ResponseWriter, request *http.Request) {
@@ -29,22 +30,47 @@ func handleRequest(response http.ResponseWriter, request *http.Request) {
 	sendCspParam := request.FormValue("send-csp")
 	sendCsp := sendCspParam == "on"
 	defaultSrcParam := request.FormValue("default-src")
+	scriptSrcParam := request.FormValue("script-src")
+	imgSrcParam := request.FormValue("img-src")
+	styleSrcParam := request.FormValue("style-src")
 
 	cspHeader := ""
 
-	if sendCsp && defaultSrcParam != "" {
-		cspHeader = fmt.Sprintf("report-uri /report; default-src %s;", defaultSrcParam)
+	if sendCsp {
+		cspHeader = createCspHeader(defaultSrcParam, scriptSrcParam, imgSrcParam, styleSrcParam)
 		response.Header().Set("content-security-policy", cspHeader)
 	}
 
-	data := renderInfo{sendCsp, defaultSrcParam, cspHeader}
+	data := renderInfo{sendCsp, defaultSrcParam, scriptSrcParam, styleSrcParam, imgSrcParam, cspHeader}
 
 	renderPage(response, data)
+}
+
+func createCspHeader(defaultSrc string, scriptSrc string, imgSrc string, styleSrc string) string {
+	headerFields := make([]string, 0, 10)
+	headerFields = append(headerFields, "report-uri /report;")
+
+	headerFields = appendCspFieldIfNotEmpty(headerFields, "default-src", defaultSrc)
+	headerFields = appendCspFieldIfNotEmpty(headerFields, "script-src", scriptSrc)
+	headerFields = appendCspFieldIfNotEmpty(headerFields, "style-src", styleSrc)
+	headerFields = appendCspFieldIfNotEmpty(headerFields, "img-src", imgSrc)
+
+	return strings.Join(headerFields, " ")
+}
+
+func appendCspFieldIfNotEmpty(headerFields []string, fieldName string, fieldValue string) []string {
+	if fieldValue != "" {
+		return append(headerFields, fmt.Sprintf("%s %s;", fieldName, fieldValue))
+	}
+	return headerFields
 }
 
 type renderInfo struct {
 	SendCsp    bool
 	DefaultSrc string
+	ScriptSrc  string
+	StyleSrc   string
+	ImgSrc     string
 	CspHeader  string
 }
 
@@ -118,6 +144,24 @@ const pageTemplate = `
           <label>
             default-src
             <input type="text" name="default-src" value="{{.DefaultSrc}}">
+          </label>
+        </div>
+        <div>
+          <label>
+            script-src
+            <input type="text" name="script-src" value="{{.ScriptSrc}}">
+          </label>
+        </div>
+        <div>
+          <label>
+            style-src
+            <input type="text" name="style-src" value="{{.StyleSrc}}">
+          </label>
+        </div>
+        <div>
+          <label>
+            img-src
+            <input type="text" name="img-src" value="{{.ImgSrc}}">
           </label>
         </div>
         <button type="submit">go</button>

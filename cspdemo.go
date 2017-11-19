@@ -113,9 +113,6 @@ func main() {
 	http.ListenAndServe(":3000", nil)
 }
 
-// TODO: Examples:
-// checksum
-
 const pageTemplate = `
 <html>
   <head>
@@ -183,6 +180,8 @@ const pageTemplate = `
       <div class="demo-local">
         <h3>This section uses css that is rendered in the header</h3>
         <div class="css-testarea">This text should be red</div>
+        <div class="js-clickhandler"><button onclick="alert('Hello, world.');">Here</button> is a clickhandler with the hash
+        <span class="sha256-hash">qznLcsROx4GACP2dm0UCKCzCG+HiZ1guq6ZZDob/Tng=</span>
       </div>
       <div class="demo-path-only">
         <h3>This section uses css and script that is loaded by a path relative to the document domain</h3>

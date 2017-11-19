@@ -28,9 +28,9 @@ Cspdemo is a work in progress. Right now, the following features are supported:
 - not sending a Content Security Policy Header at all
 - displaying of the current Content Security Policy header in the HTML side (for reference)
 - logging of reports of violations of the Content Security Policy in the stdout of the shell where the server is started
+- an inline onclick-handler with javascript with a specified sha256 hash
 
 Planned features
 ----------------
 
 - some more different attributes of the Content Security Policy to be set in the page form
-- more different resources
